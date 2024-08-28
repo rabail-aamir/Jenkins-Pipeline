@@ -58,9 +58,12 @@ pipeline {
             emailext (
                 subject: "Pipeline ${currentBuild.fullDisplayName}",
                 body: "Pipeline has completed. Stage: ${env.STAGE_NAME}",
-                to: "rabailaamir993@gmail.com"
+                to: "rabailaamir993@gmail.com",
+                smtpHost: 'smtp.yourprovider.com',
+                smtpPort: '587',
+                replyTo: 'no-reply@yourdomain.com',
+                from: 'jenkins@yourdomain.com'
             )
         }
     }
 }
-
