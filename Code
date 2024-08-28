@@ -58,7 +58,7 @@ pipeline {
             emailext (
                 subject: "Pipeline ${currentBuild.fullDisplayName}",
                 body: "Pipeline has completed. Stage: ${env.STAGE_NAME}",
-                to: "rabailamir310@gmail.com"
+                to: "rabailaamir993@gmail.com"
             )
         }
     }
