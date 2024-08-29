@@ -14,6 +14,24 @@ pipeline {
                 echo 'Running unit and integration tests using JUnit...'
                 // Example tool: JUnit for unit tests, Selenium for integration tests
             }
+            post {
+                success {
+                    emailext(
+                        subject: "Unit and Integration Tests Successful - ${currentBuild.fullDisplayName}",
+                        body: "The Unit and Integration Tests stage has completed successfully.",
+                        to: "rabailaamir993@gmail.com",
+                        attachLog: true
+                    )
+                }
+                failure {
+                    emailext(
+                        subject: "Unit and Integration Tests Failed - ${currentBuild.fullDisplayName}",
+                        body: "The Unit and Integration Tests stage has failed. Please check the attached logs for details.",
+                        to: "rabailaamir993@gmail.com",
+                        attachLog: true
+                    )
+                }
+            }
         }
 
         stage('Code Analysis') {
@@ -27,6 +45,24 @@ pipeline {
             steps {
                 echo 'Performing security scan using OWASP ZAP...'
                 // Example tool: OWASP ZAP
+            }
+            post {
+                success {
+                    emailext(
+                        subject: "Security Scan Successful - ${currentBuild.fullDisplayName}",
+                        body: "The Security Scan stage has completed successfully.",
+                        to: "rabailaamir993@gmail.com",
+                        attachLog: true
+                    )
+                }
+                failure {
+                    emailext(
+                        subject: "Security Scan Failed - ${currentBuild.fullDisplayName}",
+                        body: "The Security Scan stage has failed. Please check the attached logs for details.",
+                        to: "rabailaamir993@gmail.com",
+                        attachLog: true
+                    )
+                }
             }
         }
 
@@ -53,36 +89,8 @@ pipeline {
     }
 
     post {
-        success {
-            emailext (
-                subject: "Pipeline Successful - ${currentBuild.fullDisplayName}",
-                body: "The pipeline has completed successfully. All stages have passed.",
-                to: "rabailaamir993@gmail.com"
-            )
-        }
-
-        failure {
-            emailext (
-                subject: "Pipeline Failed - ${currentBuild.fullDisplayName}",
-                body: "The pipeline has failed. Please check the logs for details.",
-                to: "rabailaamir993@gmail.com"
-            )
-        }
-
-        unstable {
-            emailext (
-                subject: "Pipeline Unstable - ${currentBuild.fullDisplayName}",
-                body: "The pipeline is unstable. Some stages might have issues.",
-                to: "rabailaamir993@gmail.com"
-            )
-        }
-
         always {
-            emailext (
-                subject: "Pipeline Completed - ${currentBuild.fullDisplayName}",
-                body: "Pipeline has completed. Final status: ${currentBuild.currentResult}",
-                to: "rabailaamir993@gmail.com"
-            )
+            echo 'Pipeline has completed.'
         }
     }
 }
