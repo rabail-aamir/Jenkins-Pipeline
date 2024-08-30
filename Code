@@ -5,20 +5,18 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the code using Maven...'
-                // Example tool: Maven
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit and integration tests using JUnit...'
-                // Example tool: JUnit for unit tests, Selenium for integration tests
+                echo 'Running unit and integration tests using TestNG...'
             }
             post {
                 success {
                     emailext(
                         subject: "Unit and Integration Tests Successful - ${currentBuild.fullDisplayName}",
-                        body: "The Unit and Integration Tests stage has completed successfully.",
+                        body: "The Unit and Integration Tests stage is successfully completed.",
                         to: "rabailaamir993@gmail.com",
                         attachLog: true
                     )
@@ -26,7 +24,7 @@ pipeline {
                 failure {
                     emailext(
                         subject: "Unit and Integration Tests Failed - ${currentBuild.fullDisplayName}",
-                        body: "The Unit and Integration Tests stage has failed. Please check the attached logs for details.",
+                        body: "The Unit and Integration Tests stage is failed.",
                         to: "rabailaamir993@gmail.com",
                         attachLog: true
                     )
@@ -36,21 +34,21 @@ pipeline {
 
         stage('Code Analysis') {
             steps {
-                echo 'Analyzing the code quality using SonarQube...'
-                // Example tool: SonarQube
+                echo 'Analyzing the code quality using Codacy..'
+                
             }
         }
 
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan using OWASP ZAP...'
-                // Example tool: OWASP ZAP
+                echo 'Performing security scan using OpenVAS...'
+                
             }
             post {
                 success {
                     emailext(
-                        subject: "Security Scan Successful - ${currentBuild.fullDisplayName}",
-                        body: "The Security Scan stage has completed successfully.",
+                        subject: "Security Scan is Successful - ${currentBuild.fullDisplayName}",
+                        body: "The Security Scan stage is successfully completed.",
                         to: "rabailaamir993@gmail.com",
                         attachLog: true
                     )
@@ -58,7 +56,7 @@ pipeline {
                 failure {
                     emailext(
                         subject: "Security Scan Failed - ${currentBuild.fullDisplayName}",
-                        body: "The Security Scan stage has failed. Please check the attached logs for details.",
+                        body: "The Security Scan stage is failed.",
                         to: "rabailaamir993@gmail.com",
                         attachLog: true
                     )
@@ -69,28 +67,27 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying the application to the staging environment...'
-                // Example environment: AWS EC2
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on the staging environment using Selenium...'
-                // Example tool: Selenium
+    
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying the application to the production environment...'
-                // Example environment: AWS EC2
+                echo 'Deploying the application to the production server AWS EC2..'
+                
             }
         }
     }
 
     post {
         always {
-            echo 'Pipeline has completed.'
+            echo 'Pipeline is completed.'
         }
     }
 }
